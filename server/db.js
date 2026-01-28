@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const MONGO_URI = "mongodb+srv://nandiprasadkm18_db_user:k93C6uknkbGTzmMA@cluster0.psolpr8.mongodb.net/?appName=Cluster0";
+const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI)
   .then(() => console.log('Connected to MongoDB Atlas'))

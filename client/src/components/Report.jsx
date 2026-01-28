@@ -138,7 +138,7 @@ const Report = () => {
                                         <span className="text-xs uppercase text-gray-500 mb-2">Verified Inspector</span>
                                         <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-blue-500/50">
                                             <img
-                                                src={`http://localhost:3001${inspection.inspector_selfie_url}`}
+                                                src={inspection.inspector_selfie_url.startsWith('http') ? inspection.inspector_selfie_url : `http://localhost:3001${inspection.inspector_selfie_url}`}
                                                 alt="Inspector"
                                                 className="w-full h-full object-cover"
                                                 crossOrigin="anonymous"
@@ -151,7 +151,7 @@ const Report = () => {
                                         <span className="text-xs uppercase text-gray-500 mb-2">ID Card</span>
                                         <div className="w-32 h-20 rounded overflow-hidden border border-gray-600">
                                             <img
-                                                src={`http://localhost:3001${inspection.inspector_id_card_url}`}
+                                                src={inspection.inspector_id_card_url.startsWith('http') ? inspection.inspector_id_card_url : `http://localhost:3001${inspection.inspector_id_card_url}`}
                                                 alt="ID Card"
                                                 className="w-full h-full object-cover"
                                                 crossOrigin="anonymous"
@@ -164,7 +164,7 @@ const Report = () => {
                                         <span className="text-xs uppercase text-gray-500 mb-2">RC Card</span>
                                         <div className="w-32 h-20 rounded overflow-hidden border border-gray-600">
                                             <img
-                                                src={`http://localhost:3001${inspection.inspector_rc_url}`}
+                                                src={inspection.inspector_rc_url.startsWith('http') ? inspection.inspector_rc_url : `http://localhost:3001${inspection.inspector_rc_url}`}
                                                 alt="RC Card"
                                                 className="w-full h-full object-cover"
                                                 crossOrigin="anonymous"
@@ -237,7 +237,7 @@ const Report = () => {
                             {step.photo_url && (
                                 <div className="flex-shrink-0 w-full md:w-32 h-32 bg-black/50 rounded-lg overflow-hidden border border-gray-700">
                                     <img
-                                        src={`http://localhost:3001${step.photo_url}`}
+                                        src={step.photo_url.startsWith('http') ? step.photo_url : `http://localhost:3001${step.photo_url}`}
                                         alt="Evidence"
                                         className="w-full h-full object-cover"
                                         crossOrigin="anonymous"

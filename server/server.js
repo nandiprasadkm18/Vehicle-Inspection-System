@@ -1,3 +1,7 @@
+require('dotenv').config();
+require('dotenv').config();
+require('dotenv').config();
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -10,28 +14,30 @@ const { calculateHash } = require('./cryptoUtils');
 const app = express();
 const PORT = 3001;
 
-// Ensure uploads dir exists
-const uploadDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir);
-}
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
-// Multer Storage
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, uploadDir)
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
-    }
+// Cloudinary Config
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
 });
+
+// Multer Cloudinary Storage
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'vehicle-inspection',
+        allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
+    },
+});
+
 const upload = multer({ storage: storage });
 
 app.use(cors());
 app.use(bodyParser.json());
-// Serve uploads statically
-app.use('/uploads', express.static(uploadDir));
+// app.use('/uploads', express.static(uploadDir)); // Removed local static serve
 
 // --- API ROUTES ---
 
@@ -49,9 +55,10 @@ app.post('/api/inspections', upload.fields([
         return res.status(400).json({ error: "Selfie, ID Card, and RC Photo are all required" });
     }
 
-    const inspector_selfie_url = `/uploads/${req.files['selfie'][0].filename}`;
-    const inspector_id_card_url = `/uploads/${req.files['id_card'][0].filename}`;
-    const inspector_rc_url = `/uploads/${req.files['rc_photo'][0].filename}`;
+    // Cloudinary returns the full URL in `path`
+    const inspector_selfie_url = req.files['selfie'][0].path;
+    const inspector_id_card_url = req.files['id_card'][0].path;
+    const inspector_rc_url = req.files['rc_photo'][0].path;
 
     try {
         const newInspection = new Inspection({
@@ -85,7 +92,7 @@ app.post('/api/inspections/:id/steps', upload.single('photo'), async (req, res) 
     if (!req.file) {
         return res.status(400).json({ error: "Evidence photo is required" });
     }
-    const photo_url = `/uploads/${req.file.filename}`;
+    const photo_url = req.file.path;
 
     try {
         // Get the last step to find the previous hash
