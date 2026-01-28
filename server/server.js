@@ -8,7 +8,7 @@ const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const { Inspection, Step } = require('./db');
+const { connectDB, Inspection, Step } = require('./db');
 const { calculateHash } = require('./cryptoUtils');
 
 const app = express();
@@ -41,6 +41,17 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(bodyParser.json());
+
+// Middleware to ensure DB connection
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (err) {
+        console.error("Database connection failure:", err);
+        res.status(500).json({ error: "Database connection failed" });
+    }
+});
 // app.use('/uploads', express.static(uploadDir)); // Removed local static serve
 
 // --- API ROUTES ---

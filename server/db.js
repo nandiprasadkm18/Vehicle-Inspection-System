@@ -89,6 +89,7 @@ const Inspection = mongoose.model('Inspection', InspectionSchema);
 const Step = mongoose.model('Step', StepSchema);
 
 module.exports = {
+  connectDB,
   Inspection,
   Step
 };
