@@ -21,8 +21,10 @@ const Dashboard = ({ onLogout }) => {
     const [rcPhoto, setRcPhoto] = useState(null);
     const [submissionError, setSubmissionError] = useState(null);
 
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
     useEffect(() => {
-        fetch('http://localhost:3001/api/inspections')
+        fetch(`${API_URL}/api/inspections`)
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data)) {
@@ -58,7 +60,7 @@ const Dashboard = ({ onLogout }) => {
         formData.append('rc_photo', rcPhoto);
 
         try {
-            const res = await fetch('http://localhost:3001/api/inspections', {
+            const res = await fetch(`${API_URL}/api/inspections`, {
                 method: 'POST',
                 body: formData
             });

@@ -26,9 +26,11 @@ const InspectionWizard = () => {
     const [capturedPhoto, setCapturedPhoto] = useState(null);
     const [pendingResult, setPendingResult] = useState(null); // 'PASS' or 'FAIL' waiting for photo
 
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
     // Check if we need to resume
     useEffect(() => {
-        fetch(`http://localhost:3001/api/inspections/${id}`)
+        fetch(`${API_URL}/api/inspections/${id}`)
             .then(res => res.json())
             .then(data => {
                 if (data.inspection.status === 'COMPLETED') {
@@ -92,7 +94,7 @@ const InspectionWizard = () => {
         formData.append('photo', photoFile);
 
         try {
-            const res = await fetch(`http://localhost:3001/api/inspections/${id}/steps`, {
+            const res = await fetch(`${API_URL}/api/inspections/${id}/steps`, {
                 method: 'POST',
                 body: formData
             });
@@ -116,7 +118,7 @@ const InspectionWizard = () => {
     const handleSeal = async () => {
         setLoading(true);
         try {
-            await fetch(`http://localhost:3001/api/inspections/${id}/seal`, {
+            await fetch(`${API_URL}/api/inspections/${id}/seal`, {
                 method: 'POST'
             });
             navigate(`/report/${id}`);

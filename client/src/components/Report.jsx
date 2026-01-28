@@ -19,7 +19,7 @@ const Report = () => {
         if (!window.confirm("WARNING: This will permanently destroy this record.")) return;
 
         try {
-            await fetch(`http://localhost:3001/api/inspections/${id}`, { method: 'DELETE' });
+            await fetch(`${API_URL}/api/inspections/${id}`, { method: 'DELETE' });
             navigate('/');
         } catch (e) {
             console.error(e);
@@ -60,8 +60,10 @@ const Report = () => {
         }
     };
 
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
     useEffect(() => {
-        fetch(`http://localhost:3001/api/inspections/${id}`)
+        fetch(`${API_URL}/api/inspections/${id}`)
             .then(res => res.json())
             .then(fetchedData => {
                 setData(fetchedData);
@@ -237,7 +239,7 @@ const Report = () => {
                             {step.photo_url && (
                                 <div className="flex-shrink-0 w-full md:w-32 h-32 bg-black/50 rounded-lg overflow-hidden border border-gray-700">
                                     <img
-                                        src={step.photo_url.startsWith('http') ? step.photo_url : `http://localhost:3001${step.photo_url}`}
+                                        src={step.photo_url.startsWith('http') ? step.photo_url : `${API_URL}${step.photo_url}`}
                                         alt="Evidence"
                                         className="w-full h-full object-cover"
                                         crossOrigin="anonymous"

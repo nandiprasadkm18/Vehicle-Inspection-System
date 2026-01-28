@@ -40,6 +40,9 @@ app.use(bodyParser.json());
 // app.use('/uploads', express.static(uploadDir)); // Removed local static serve
 
 // --- API ROUTES ---
+app.get('/', (req, res) => {
+    res.send('Vehicle Inspection System API is Running. Use /api/inspections to interact.');
+});
 
 // Expects multipart/form-data: inspector_name, vehicle_id, password, inspector_badge_id, engine_number, model_number, chassis_number, selfie (file), id_card (file), rc_photo (file)
 app.post('/api/inspections', upload.fields([
@@ -203,3 +206,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
+
+module.exports = app;
