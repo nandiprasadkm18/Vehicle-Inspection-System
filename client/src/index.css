@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Premium Dark Storm Palette */
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  /* More subtle, premium glass */
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.15);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+
+  --primary: #38bdf8;
+  /* Sky Blue */
+  --primary-glow: rgba(56, 189, 248, 0.4);
+
+  --success: #34d399;
+  /* Emerald */
+  --success-glow: rgba(52, 211, 153, 0.4);
+
+  --danger: #f87171;
+  /* Soft Red */
+
+  --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+  --backdrop-blur: 16px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-gradient);
+  background-size: 400% 400%;
+  animation: cloud-move 20s ease infinite;
+  color: var(--text-primary);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* --- Glassmorphism --- */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--backdrop-blur));
+  -webkit-backdrop-filter: blur(var(--backdrop-blur));
+  border: 1px solid var(--glass-border);
+  border-top: 1px solid var(--glass-highlight);
+  /* Top highlight for 3D effect */
+  border-radius: 1.5rem;
+  /* Softer rounded corners */
+  padding: 2.5rem;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-panel:hover {
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+  transform: translateY(-2px);
+  /* Subtle lift */
+}
+
+/* --- Interactive Elements --- */
+button {
+  border-radius: 0.75rem;
+  padding: 0.75em 1.5em;
+  font-size: 1em;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  letter-spacing: 0.02em;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), #0ea5e9);
+  color: #0f172a;
+  /* Dark text on bright button for contrast */
+  box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--primary-glow);
+  filter: brightness(1.1);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--success), #059669);
+  color: #064e3b;
+  box-shadow: 0 4px 15px var(--success-glow);
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--success-glow);
+}
+
+/* --- Form Inputs --- */
+input,
+textarea {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* --- Typography & Badges --- */
+h1,
+h2,
+h3 {
+  margin-top: 0;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  background: linear-gradient(to right, #fff, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gray-400 {
+  color: var(--text-secondary) !important;
+}
+
+.text-gray-300 {
+  color: #cbd5e1 !important;
+}
+
+.status-badge {
+  padding: 0.35rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.status-verified {
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+}
+
+.status-tampered {
+  background: rgba(248, 113, 113, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+/* --- Animations --- */
+.animate-fade-in {
+  animation: floatUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes cloud-move {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes floatUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+
+/* --- PDF Print Mode --- */
+.pdf-print-mode {
+  background: #1e293b !important;
+  /* Slate 800 */
+  color: #f8fafc !important;
+  /* Slate 50 */
+  border: none !important;
+  box-shadow: none !important;
+  padding: 2rem !important;
+  /* Add some padding for the PDF */
+}
+
+.pdf-print-mode * {
+  color: #f8fafc !important;
+  background: transparent !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  border-color: #475569 !important;
+  /* Slate 600 for borders */
+}
+
+.pdf-print-mode .glass-panel {
+  background: #0f172a !important;
+  /* Slate 900 for panels */
+  border: 1px solid #334155 !important;
+  box-shadow: none !important;
+}
+
+.pdf-print-mode h1,
+.pdf-print-mode h2,
+.pdf-print-mode h3 {
+  background: none !important;
+  -webkit-text-fill-color: #f8fafc !important;
+}
+
+.pdf-print-mode .text-gray-400,
+.pdf-print-mode .text-gray-300,
+.pdf-print-mode .text-gray-500 {
+  color: #cbd5e1 !important;
+  /* Slate 300 */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
