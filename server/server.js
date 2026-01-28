@@ -35,7 +35,11 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage });
 
-app.use(cors());
+app.use(cors({
+    origin: '*', // Allow all origins for Vercel deployment
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(bodyParser.json());
 // app.use('/uploads', express.static(uploadDir)); // Removed local static serve
 
