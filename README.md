@@ -27,7 +27,8 @@
 | **Security** | SHA-256 Hashing, JWT Authentication |
 
 ---
-
+user
+password
 ## 📂 Project Structure
 
 ```text
