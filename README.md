@@ -1,18 +1,55 @@
-# 🛡️ Vehicle Inspection System (VIS)
-### *Next-Generation Digital Inspection & Compliance Platform*
+# 🚗 Vehicle Inspection System (VIS)
 
-**VIS** is a high-integrity, full-stack platform designed to eliminate fraud in vehicle inspections. By implementing a **SHA-256 cryptographic data chain**, the system ensures that every inspection record—from the initial selfie to the final RC scan—is immutable and audit-ready.
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-20-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-5.0-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Latest-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-3-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![Cloudinary](https://img.shields.io/badge/Cloudinary-V2-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white)
+
+## ✨ Overview
+
+The **Vehicle Inspection System (VIS)** is a high-integrity, full-stack digital platform designed to modernize and secure the vehicle inspection process. By leveraging **cryptographic data chaining** and rich media evidence, VIS ensures that every inspection record is authentic, tamper-proof, and audit-ready.
+
+It provides a seamless 5-step workflow for inspectors, generating a secure, verifiable chain of evidence for every vehicle assessed.
 
 ---
 
-## 🚀 Technical Highlights
+## 🚀 Key Features
 
-* **Cryptographic Integrity**: Implements a "block-style" hashing mechanism where each inspection step contains the hash of the previous step.
-* **Proof of Presence**: Mandatory GNSS (Global Navigation Satellite System) logging to prevent "armchair" inspections.
-* **Rich Media Chain**: Real-time upload to Cloudinary with metadata injection for tamper-proof evidence.
-* **Modern Stack**: Built on **React 19** for peak frontend performance and **Node.js** for scalable asynchronous processing.
+*   **🛡️ Cryptographic Integrity**: Every inspection step is linked via an immutable **SHA-256 hash chain**. If any part of the record is tampered with, the chain breaks, highlighting the fraud.
+*   **📸 Multi-Step Evidence Capture**: Mandatory real-time capture of:
+    1.  **Selfie**: Verify the inspector's identity.
+    2.  **ID Card**: Link the inspection to a valid document.
+    3.  **Vehicle Photo**: Broad overview of the car.
+    4.  **RC Document**: Verification of ownership.
+    5.  **Chassis Number**: Unique vehicle identification.
+*   **🌍 Geolocation Tracking**: Automatic GNSS logging (latitude/longitude) for every step to verify the physical presence at the vehicle.
+*   **📄 Professional PDF Reports**: One-click generation of comprehensive certificates including all high-res photos and cryptographic stamps.
+*   **📡 Hybrid Data Storage**: Uses **MongoDB** for primary storage and **SQLite** for edge/local support.
 
+---
 
+## 📂 Project Structure
+
+```text
+Vehicle-Inspection-System/
+├── client/                # React Frontend (Vite)
+│   ├── src/
+│   │   ├── components/    # Reusable UI components
+│   │   ├── App.jsx        # Main routing and logic
+│   │   └── main.jsx       # Entry point
+│   └── package.json
+├── server/                # Node.js + Express Backend
+│   ├── uploads/           # Local storage for temp images
+│   ├── server.js          # Express server entry point
+│   ├── db.js             # MongoDB connection logic
+│   ├── db_sqlite.js       # SQLite connection logic
+│   ├── cryptoUtils.js     # SHA-256 chaining core logic
+│   ├── verify_tamper.js   # Integrity check scripts
+│   └── package.json
+└── README.md
+```
 
 ---
 
@@ -20,79 +57,80 @@
 
 | Layer | Technology |
 | :--- | :--- |
-| **Frontend** | React 19, Vite, Tailwind CSS, Lucide-React |
-| **Backend** | Node.js, Express.js |
-| **Database** | MongoDB (Primary), SQLite3 (Edge support) |
-| **Storage** | Cloudinary API (High-performance Image CDN) |
-| **Security** | SHA-256 Hashing, JWT Authentication |
+| **Frontend** | React 19, Vite, TailwindCSS, Lucide-React |
+| **Backend** | Node.js, Express 5 |
+| **Database** | MongoDB (Mongoose), SQLite3 |
+| **Auth/Certs** | SHA-256 Cryptographic validation |
+| **Storage** | Cloudinary (Image CDN) |
 
 ---
-user
 
-password
-## 📂 Project Structure
+## 🚦 Getting Started
 
-```text
-vehicle-inspection-system/
-├── client/                # React 19 Frontend
-│   ├── src/components     # UI Components
-│   └── src/hooks          # Hardware/Geolocation hooks
-├── server/                # Node.js Backend
-│   ├── models/            # Mongoose Schemas
-│   ├── routes/            # API Endpoints
-│   └── utils/             # Crypto & Hash Logic
-└── docs/                  # API Documentation
+### Prerequisites
 
-🏗️ Architecture & Workflow
-Capture: React hooks interface with device camera and GPS.
+- **Node.js**: v18 or higher
+- **MongoDB**: A running instance (local or Atlas)
+- **Cloudinary**: A free account for image hosting
 
-Hash: Data is packaged with a timestamp and previous step hash.
+### Installation
 
-Store: Images move to Cloudinary; metadata and hashes move to MongoDB.
+1.  **Clone the Repo**
+    ```bash
+    git clone https://github.com/nandiprasadkm18/Vehicle-Inspection-System.git
+    cd Vehicle-Inspection-System
+    ```
 
-Certify: A PDF is generated, pulling the verified chain to prove no data was altered post-inspection.
+2.  **Setup Backend**
+    ```bash
+    cd server
+    npm install
+    ```
+    Create a `.env` file in the `server` directory:
+    ```env
+    PORT=5000
+    MONGO_URI=mongodb://localhost:27017/vis
+    CLOUDINARY_CLOUD_NAME=your_name
+    CLOUDINARY_API_KEY=your_key
+    CLOUDINARY_API_SECRET=your_secret
+    ```
 
-⚙️ Installation & Setup
-Prerequisites
-Node.js v18.0.0+
+3.  **Setup Frontend**
+    ```bash
+    cd ../client
+    npm install
+    ```
 
-MongoDB Instance (Local or Atlas)
+### Running the App
 
-Cloudinary Account for media hosting
+- **Start Backend**: 
+  ```bash
+  cd server
+  node server.js
+  ```
+- **Start Frontend**: 
+  ```bash
+  cd client
+  npm run dev
+  ```
 
-1. Clone & Install
-Bash
-git clone <repository-url>
-cd Vehicle-Inspection-System
-# Install dependencies for both folders
-cd server && npm install
-cd ../client && npm install
-2. Environment Configuration
-Create a .env file in the /server directory:
+---
 
-Code snippet
-PORT=5000
-MONGO_URI=your_mongodb_uri
-CLOUDINARY_CLOUD_NAME=your_name
-CLOUDINARY_API_KEY=your_key
-CLOUDINARY_API_SECRET=your_secret
-JWT_SECRET=your_secure_random_string
-3. Execution
-Start Backend Server:
+## 🔒 Cryptographic Verification
 
-Bash
+To verify the integrity of the data manually, you can use the built-in scripts in the `server` directory:
+
+```bash
 cd server
-node server.js
-Start Frontend Development:
+node verify_tamper.js  # Checks for any modifications in the inspection database
+```
 
-Bash
-cd client
-npm run dev
-💼 Professional Use Cases
-Insurance Underwriting: Trusted pre-insurance vehicle health audits.
+---
 
-Fleet Management: Lifecycle safety checks for logistics and rental fleets.
+## 📝 License
 
-Pre-Owned Sales: Building buyer confidence through certified inspection reports.
+Distributed under the MIT License. See `LICENSE` for more information.
 
-Regulatory Compliance: Tamper-proof governmental safety inspections.
+---
+
+**Developed with ❤️ by [Nandiprasad KM](https://github.com/nandiprasadkm18)**
